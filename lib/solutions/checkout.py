@@ -36,7 +36,7 @@ def checkout(skus):
     cart = {}
     for item in skus:
         if item not in PRICES:
-            return -1
+            return "%s ::: %s " % (item, PRICES)
         else:
             if item in cart:
                 cart[item] = cart[item] + 1
