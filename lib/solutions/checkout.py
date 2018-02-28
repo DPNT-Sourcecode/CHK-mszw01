@@ -8,18 +8,46 @@ MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45]}
 FREEDEALS = {'E': [2, ['B', 1]]}
 
 
+def check_and_apply_freedeals(cart):
+
+    for item in FREEDEALS:
+        if item in cart and cart[item]>= FREEDEALS[item][0]:
+            num = cart[item]
+            while num >= FREEDEALS[item][0]:
+                if FREEDEALS[item][1][0] in cart:
+                    cart[FREEDEALS[item][1][0]] -= FREEDEALS[item][1][1]
+                num -= FREEDEALS[item][0]
+    return cart
+
+
 def calculate_cart_cost(cart):
     total = 0
+    cart = check_and_apply_freedeals(cart)
 
     for item, quantity in cart.iteritems():
         num = quantity
         while num:
-            if item in MULTIBUY and num >= MULTIBUY[item][0]:
-                total += MULTIBUY[item][1]
-                num -= MULTIBUY[item][0]
+
+            if item in MULTIBUY and type(MULTIBUY[item][0] is list):
+
+                if num >= MULTIBUY[item][0][0]:
+                    total += MULTIBUY[item][0][1]
+                    num -= MULTIBUY[item][0][0]
+
+                elif num >= MULTIBUY[item][1][0]:
+                    total += MULTIBUY[item][1][1]
+                    num -= MULTIBUY[item][1][0]
+
+                else:
+                    total += num * PRICES[item]
+                    num -= num
             else:
-                total += num* PRICES[item]
-                num -= num
+                if item in MULTIBUY and num >= MULTIBUY[item][0]:
+                    total += MULTIBUY[item][1]
+                    num -= MULTIBUY[item][0]
+                else:
+                    total += num* PRICES[item]
+                    num -= num
     return total
 
 
