@@ -3,9 +3,16 @@
 
 import unittest
 
-PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E':40, 'F':10}
-MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45]}
-FREEDEALS = {'E': [2, ['B', 1]], 'F': [3, ['F', 1]]}
+PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40, 'F': 10,
+          'G': 20, 'H': 10, 'I': 35, 'J': 60, 'K': 80, 'L': 90,
+          'M': 15, 'N': 40, 'O': 10, 'P': 50, 'Q': 30, 'R': 50,
+          'S': 30, 'T': 20, 'U': 40, 'V': 50, 'W': 20, 'X': 90, 'Y': 10,
+          'Z': 50}
+MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45], 'H': [[10, 80], [5, 45]],
+            'K': [2, 150], 'P': [5, 200], 'Q': [3, 80], 'V': [[3, 130], [2,
+                                                                         90]]}
+FREEDEALS = {'E': [2, ['B', 1]], 'F': [3, ['F', 1]], 'N': [3, ['M', 1]],
+             'R': [3, ['Q', 1]], 'U': [4, ['U', 1]]}
 
 
 def check_and_apply_freedeals(cart):
@@ -79,9 +86,7 @@ def checkout(skus):
 class TestCheckout(unittest.TestCase):
 
     def test_empty_and_single_skus(self):
-        PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40, 'F': 10,
-                  'G': 20, 'H':10, 'I': 35, 'J': 60, 'K': 80, 'L':90,
-                  'M': 15, 'N': 40, 'O':10, 'P': 50}
+
         self.assertEqual(checkout(''), 0)
         self.assertEqual(checkout('A'), 50)
         self.assertEqual(checkout("B"), 30)
@@ -115,6 +120,13 @@ class TestCheckout(unittest.TestCase):
 
     def test_multibuy_skus(self):
         self.assertEqual(checkout('BB'), 45)
+        self.assertEqual(checkout('VV'), 90)
+        self.assertEqual(checkout('VVV'), 130)
+        self.assertEqual(checkout('QQQ'), 80)
+        self.assertEqual(checkout('PPPPP'), 200)
+        self.assertEqual(checkout('KK'), 150)
+        self.assertEqual(checkout('HHHHH'), 45)
+        self.assertEqual(checkout('HHHHHHHHHH'), 80)
         self.assertEqual(checkout('AAA'), 130)
         self.assertEqual(checkout('AAAAA'), 200)
 
