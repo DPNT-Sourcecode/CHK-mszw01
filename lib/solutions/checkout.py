@@ -28,7 +28,7 @@ def calculate_cart_cost(cart):
         num = quantity
         while num:
 
-            if item in MULTIBUY and type(MULTIBUY[item][0] is list):
+            if item in MULTIBUY and type(MULTIBUY[item][0]) is list:
 
                 if num >= MULTIBUY[item][0][0]:
                     total += MULTIBUY[item][0][1]
