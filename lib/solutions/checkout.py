@@ -3,9 +3,9 @@
 
 import unittest
 
-PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E':40}
+PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E':40, 'F':10}
 MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45]}
-FREEDEALS = {'E': [2, ['B', 1]]}
+FREEDEALS = {'E': [2, ['B', 1]], 'F': [3, ['F', 1]]}
 
 
 def check_and_apply_freedeals(cart):
@@ -82,6 +82,7 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout(''), 0)
         self.assertEqual(checkout('A'), 50)
         self.assertEqual(checkout("B"), 30)
+        self.assertEqual(checkout('FF'), 20)
 
     def test_multibuy_skus(self):
         self.assertEqual(checkout('BB'), 45)
@@ -89,6 +90,7 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout('AAAAA'), 200)
 
     def test_freedeals_skus(self):
+        self.assertEqual(checkout('FFF'), 20)
         self.assertEqual(checkout('EBBE'), 110)
         self.assertEqual(checkout('EEEEBBB'), 190)
 
