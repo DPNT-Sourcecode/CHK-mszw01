@@ -36,7 +36,7 @@ def checkout(skus):
     cart = {}
     for item in skus:
         if item not in PRICES:
-            return "%s ::: %s " % (item, PRICES)
+            return -1
         else:
             if item in cart:
                 cart[item] = cart[item] + 1
@@ -50,7 +50,7 @@ def checkout(skus):
 class TestCheckout(unittest.TestCase):
 
     def test_checkout(self):
-        self.assertEqual(checkout(unicode('AA')), 100)
+        self.assertEqual(checkout('AA'), 100)
 
         self.assertEqual(checkout(''), 0)
         self.assertEqual(checkout('A'), 50)
