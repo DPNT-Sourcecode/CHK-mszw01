@@ -24,6 +24,9 @@ def calculate_cart_cost(cart):
 
 def checkout(skus):
 
+    if type(skus) is list:
+        skus = skus[0]
+
     if not isinstance(skus, str):
         return -1
 
