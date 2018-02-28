@@ -129,11 +129,16 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout('HHHHHHHHHH'), 80)
         self.assertEqual(checkout('AAA'), 130)
         self.assertEqual(checkout('AAAAA'), 200)
+        self.assertEqual(checkout('UUU'), 40)
+
 
     def test_freedeals_skus(self):
+        self.assertEqual(checkout('UUUU'), 40)
         self.assertEqual(checkout('FFF'), 20)
         self.assertEqual(checkout('EBBE'), 110)
         self.assertEqual(checkout('EEEEBBB'), 190)
+        self.assertEqual(checkout('RRRQQ'), 180)
+        self.assertEqual(checkout('NNNM'), 120)
 
     def test_multibuy_and_free_deals_skus(self):
         self.assertEqual(checkout('AAAAABBEE'), 310)
