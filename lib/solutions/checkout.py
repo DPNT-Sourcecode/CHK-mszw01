@@ -3,8 +3,9 @@
 
 import unittest
 
-PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
-OFFERS = {'A': [3, 130], 'B': [2,45]}
+PRICES = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E':40}
+MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45]}
+FREEDEALS = {'E': [2, ['B', 1]]}
 
 
 def calculate_cart_cost(cart):
@@ -13,9 +14,9 @@ def calculate_cart_cost(cart):
     for item, quantity in cart.iteritems():
         num = quantity
         while num:
-            if item in OFFERS and num >= OFFERS[item][0]:
-                total += OFFERS[item][1]
-                num -= OFFERS[item][0]
+            if item in MULTIBUY and num >= MULTIBUY[item][0]:
+                total += MULTIBUY[item][1]
+                num -= MULTIBUY[item][0]
             else:
                 total += num* PRICES[item]
                 num -= num
@@ -49,11 +50,19 @@ def checkout(skus):
 
 class TestCheckout(unittest.TestCase):
 
-    def test_checkout(self):
-        self.assertEqual(checkout('AA'), 100)
-
+    def test_empty_and_single_skus(self):
         self.assertEqual(checkout(''), 0)
         self.assertEqual(checkout('A'), 50)
         self.assertEqual(checkout("B"), 30)
-        self.assertEqual(checkout('AA'), 100)
+
+    def test_multibuy_skus(self):
+        self.assertEqual(checkout('BB'), 45)
         self.assertEqual(checkout('AAA'), 130)
+        self.assertEqual(checkout('AAAAA'), 200)
+
+    def test_freedeals_skus(self):
+        self.assertEqual(checkout('EBBE'), 110)
+        self.assertEqual(checkout('EEEEBBB'), 190)
+
+    def test_multibuy_and_free_deals_skus(self):
+        self.assertEqual(checkout('AAAAABBEE'), 310)
