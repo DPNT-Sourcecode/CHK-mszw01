@@ -50,6 +50,8 @@ def checkout(skus):
 class TestCheckout(unittest.TestCase):
 
     def test_checkout(self):
+        self.assertEqual(checkout(unicode('AA')), 100)
+
         self.assertEqual(checkout(''), 0)
         self.assertEqual(checkout('A'), 50)
         self.assertEqual(checkout("B"), 30)
