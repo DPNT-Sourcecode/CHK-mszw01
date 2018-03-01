@@ -41,7 +41,8 @@ def check_and_apply_groupdeals(cart, total):
                 for i in groupitems:
                     if i in tmpcart:
                         while tmpcart[i] and itemsum >= GROUPDEALS[groupitems][0]:
-                            if (amount + tmpcart[i]) > GROUPDEALS[groupitems][0]:
+                            if (amount + tmpcart[i]) >= GROUPDEALS[
+                                groupitems][0]:
                                 tmpcart[i] = amount + tmpcart[i] - 3
                                 count += 1
                                 amount = 0
