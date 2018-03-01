@@ -14,6 +14,8 @@ MULTIBUY = {'A': [[5, 200], [3, 130]], 'B': [2, 45], 'H': [[10, 80], [5, 45]],
 FREEDEALS = {'E': [2, ['B', 1]], 'F': [3, ['F', 1]], 'N': [3, ['M', 1]],
              'R': [3, ['Q', 1]], 'U': [4, ['U', 1]]}
 
+GROUPDEALS = {'ZSTYX': [3, 45]}
+
 
 def check_and_apply_freedeals(cart):
 
@@ -26,6 +28,14 @@ def check_and_apply_freedeals(cart):
                 num -= FREEDEALS[item][0]
     return cart
 
+def check_and_apply_groupdeals(cart, total):
+
+    for groupitems in GROUPDEALS:
+        tmpcart = {item: quantity for item, quantity in cart.iteritems() if
+                   item in groupitems}
+        if tmpcart:
+            itemsum = sum(tmpcart.value())
+            if itemsum >= GROUPDEALS[]
 
 def calculate_cart_cost(cart):
     total = 0
@@ -84,6 +94,12 @@ def checkout(skus):
 
 
 class TestCheckout(unittest.TestCase):
+
+    def test_group_deals_skus(self):
+        self.assertEqual(checkout('STX'), 45)
+        self.assertEqual(checkout('STXSTX'), 90)
+        self.assertEqual(checkout('SSS'), 45)
+
 
     def test_empty_and_single_skus(self):
 
