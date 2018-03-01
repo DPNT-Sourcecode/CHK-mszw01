@@ -35,10 +35,28 @@ def check_and_apply_groupdeals(cart, total):
                    item in groupitems}
         if tmpcart:
             itemsum = sum(tmpcart.value())
-            if itemsum >= GROUPDEALS[]
-
+            if itemsum >= GROUPDEALS[groupitems][0]:
+                count = 0
+                amount = 0
+                for i in groupitems:
+                    if i in tmpcart:
+                        while tmpcart[i] and itemsum >= GROUPDEALS[groupitems][0]:
+                            if (amount + tmpcart[i]) > GROUPDEALS[groupitems][0]:
+                                tmpcart[i] = amount + tmpcart[i] - 3
+                                count += 1
+                                amount = 0
+                                itemsum = sum(tmpcart.value())
+                            else:
+                                amount += tmpcart[i]
+                                tmpcart[i] = 0
+                total += count * GROUPDEALS[groupitems][1]
+                for item, quantity in tmpcart.iteritems():
+                    cart[item]= quantity
+    return cart, total
+                                    
 def calculate_cart_cost(cart):
     total = 0
+    cart, total = check_and_apply_groupdeals(cart, total)
     cart = check_and_apply_freedeals(cart)
 
     for item, quantity in cart.iteritems():
